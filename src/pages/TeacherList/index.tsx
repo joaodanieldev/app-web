@@ -5,9 +5,6 @@ import PageHeader from '../../components/PageHeader';
 import Select from '../../components/Select';
 import TeacherItem, {Teacher} from '../../components/TeacherItem';
 import api from '../../services/api';
-
-
-
 import './styles.css';
 
 
