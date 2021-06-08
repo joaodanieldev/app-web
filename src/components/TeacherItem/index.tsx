@@ -1,31 +1,57 @@
 import React from 'react';
 import whatsappIcon from '../../assets/images/icons/whatsapp.svg'
+import api from '../../services/api';
 import './styles.css'
 
-function TeacherItem() {
+export interface Teacher{
+  id: number;
+  avatar: string;
+  bio: string;
+  cost: Number;    
+  name: string;
+  subject: string;
+  whatsapp: string;
+}
+
+interface TeacherItemProps{
+  teacher: Teacher;
+}
+
+const TeacherItem:React.FC<TeacherItemProps> = ({teacher}) => {
+
+  function createNewConnection(){
+    api.post('connections', {
+      user_id: teacher.id
+    })
+  }
+
   return (
     <article className="teacher-item">
       <header>
-        <img src="https://media-exp1.licdn.com/dms/image/C4E03AQG7iBV-V4bB7A/profile-displayphoto-shrink_200_200/0/1575733814177?e=1628121600&v=beta&t=cXAYPxabJqbZDgcwi8fNEYa89_6MFdyLMeZ7b__3XvA" alt="Joao Daniel" />
+        <img src={teacher.avatar} alt={teacher.name} />
         <div>
-          <strong>João Daniel</strong>
-          <span>Matematica</span>
+          <strong>{teacher.name}</strong>
+          <span>{teacher.subject}</span>
         </div>
       </header>
       <p>
-        Experienced Support Technician with a demonstrated history of working in the information technology and services industry. Skilled in Microsoft Excel, Microsoft Word, Sales, and Microsoft Office. Strong information technology professional with a Bacharelado focused in Ciência da Computação from Faculdade Lourenço Filho.
-          </p>
+      {teacher.bio}
+      </p>
 
       <footer>
         <p>
           Preço/hora
-              <strong>R$ 80,00</strong>
+              <strong>R$ {teacher.cost}</strong>
         </p>
         <p>
-          <button type="button">
+          <a 
+            target="_blank" 
+            onClick={createNewConnection} 
+            href={`https://wa.me/${teacher.whatsapp}`}
+          >
             <img src={whatsappIcon} alt="Whatsapp"></img>
                 Entrar em contato
-              </button>
+          </a>
         </p>
       </footer>
     </article>
